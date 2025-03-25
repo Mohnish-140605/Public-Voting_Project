@@ -11,7 +11,9 @@ contract Voting {
     }
 
     mapping(uint => Candidate) public candidates;
-    mapping(address => bool) public voters;
+    mapping(address => bool) public registeredVoters;
+    mapping(address => bool) public hasVoted;
+    address[] public voterList;
     uint public candidatesCount;
 
     event Voted(address indexed voter, uint indexed candidateId);
@@ -27,11 +29,18 @@ contract Voting {
         candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
     }
 
+    function addVoter(address _voter) public {
+        require(!registeredVoters[_voter], "Voter already added.");
+        registeredVoters[_voter] = true;
+        voterList.push(_voter);
+    }
+
     function vote(uint _candidateId) public {
-        require(!voters[msg.sender], "You have already voted.");
+        require(registeredVoters[msg.sender], "You are not a registered voter.");
+        require(!hasVoted[msg.sender], "You have already voted.");
         require(_candidateId > 0 && _candidateId <= candidatesCount, "Invalid candidate ID.");
 
-        voters[msg.sender] = true;
+        hasVoted[msg.sender] = true;
         candidates[_candidateId].voteCount++;
 
         // Debugging line

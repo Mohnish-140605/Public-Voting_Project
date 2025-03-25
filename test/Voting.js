@@ -5,10 +5,11 @@ describe("Voting", function () {
     let voting;
     let owner;
     let addr1;
+    let addr2;
 
     beforeEach(async function () {
         Voting = await ethers.getContractFactory("Voting");
-        [owner, addr1] = await ethers.getSigners();
+        [owner, addr1, addr2] = await ethers.getSigners();
         voting = await Voting.deploy();
         await voting.deployed();
     });
@@ -22,18 +23,36 @@ describe("Voting", function () {
         expect(candidate3.name).to.equal("Charlie");
     });
 
-    it("Should allow a voter to vote", async function () {
+    it("Should allow adding a voter", async function () {
+        await voting.addVoter(addr1.address);
+        const isVoter = await voting.registeredVoters(addr1.address);
+        expect(isVoter).to.be.true;
+    });
+
+    it("Should not allow adding the same voter twice", async function () {
+        await voting.addVoter(addr1.address);
+        await expect(voting.addVoter(addr1.address)).to.be.revertedWith("Voter already added.");
+    });
+
+    it("Should allow a registered voter to vote", async function () {
+        await voting.addVoter(addr1.address);
         await voting.connect(addr1).vote(1);
         const candidate1 = await voting.candidates(1);
         expect(candidate1.voteCount).to.equal(1);
     });
 
+    it("Should not allow an unregistered voter to vote", async function () {
+        await expect(voting.connect(addr2).vote(1)).to.be.revertedWith("You are not a registered voter.");
+    });
+
     it("Should not allow double voting", async function () {
+        await voting.addVoter(addr1.address);
         await voting.connect(addr1).vote(1);
         await expect(voting.connect(addr1).vote(1)).to.be.revertedWith("You have already voted.");
     });
 
     it("Should announce the winner correctly", async function () {
+        await voting.addVoter(addr1.address);
         await voting.connect(addr1).vote(1);
         const [winnerName, winnerVoteCount] = await voting.announceWinner();
         expect(winnerName).to.equal("Alice");
