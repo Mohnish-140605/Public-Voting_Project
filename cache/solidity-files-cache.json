@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "D:\\Minors in Fintech\\Sem4\\Advanced Blockchain\\voting-project\\voting-project\\contracts\\Voting.sol": {
-      "lastModificationDate": 1742920687506,
-      "contentHash": "e2d58248641b1301c3b01db38288d21e",
+      "lastModificationDate": 1742923004933,
+      "contentHash": "5a36753e18f50629739073e6e7963940",
       "sourceName": "contracts/Voting.sol",
       "solcConfig": {
         "version": "0.8.20",

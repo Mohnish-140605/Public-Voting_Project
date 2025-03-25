@@ -44,6 +44,9 @@ contract Voting {
         require(!registeredVoters[_voter], "Voter already added.");
         registeredVoters[_voter] = true;
         voterList.push(_voter);
+
+        console.log("Added Voter:", _voter);
+
         emit VoterAdded(_voter);
     }
 
@@ -54,6 +57,10 @@ contract Voting {
 
         hasVoted[msg.sender] = true;
         candidates[_candidateId].voteCount++;
+
+        console.log("Voter:", msg.sender);
+        console.log("Voted for Candidate ID:", _candidateId);
+        console.log("Total Votes for Candidate:", candidates[_candidateId].voteCount);
 
         emit Voted(msg.sender, _candidateId);
     }

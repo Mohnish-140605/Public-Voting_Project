@@ -3,7 +3,11 @@ const hre = require("hardhat");
 async function main() {
     const Voting = await hre.ethers.getContractFactory("Voting");
     const voting = await Voting.deploy();
-    console.log("Voting contract deployed to:", voting.target);
+    
+    await voting.waitForDeployment();
+    
+    console.log("✅ Voting contract deployed!");
+    console.log("Contract Address:", voting.target);
 }
 
 main().catch((error) => {

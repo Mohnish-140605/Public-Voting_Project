@@ -13,24 +13,33 @@ describe("Voting", function () {
     it("Should initialize with 33 candidates", async function () {
         for (let i = 1; i <= 33; i++) {
             const candidate = await voting.candidates(i);
+            console.log(`Candidate ${i}:`, candidate.name);
             expect(candidate.name).to.be.a("string");
         }
     });
 
     it("Should allow adding voters", async function () {
         await voting.addVoter(voters[0].address);
+        console.log("Added voter:", voters[0].address);
         expect(await voting.registeredVoters(voters[0].address)).to.be.true;
     });
 
     it("Should prevent adding the same voter twice", async function () {
         await voting.addVoter(voters[1].address);
+        console.log("Trying to add voter again:", voters[1].address);
         await expect(voting.addVoter(voters[1].address)).to.be.revertedWith("Voter already added.");
     });
 
     it("Should allow a registered voter to vote", async function () {
         await voting.addVoter(voters[2].address);
+        console.log("Added voter:", voters[2].address);
+
         await voting.connect(voters[2]).vote(5);
+        console.log("Voter", voters[2].address, "voted for candidate ID 5");
+
         const candidate = await voting.candidates(5);
+        console.log("Candidate 5 vote count:", candidate.voteCount.toString());
+
         expect(candidate.voteCount).to.equal(1);
     });
 
