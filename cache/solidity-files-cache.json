@@ -1,13 +1,14 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "C:\\Users\\shamm\\Documents\\SEM 4\\MINOR- Blockchain Advanced\\voting-project\\contracts\\Voting.sol": {
-      "lastModificationDate": 1742898027799,
-      "contentHash": "8bc4da501d3940d1cab1385e9d8fb0f0",
+    "D:\\Minors in Fintech\\Sem4\\Advanced Blockchain\\voting-project\\voting-project\\contracts\\Voting.sol": {
+      "lastModificationDate": 1742920687506,
+      "contentHash": "e2d58248641b1301c3b01db38288d21e",
       "sourceName": "contracts/Voting.sol",
       "solcConfig": {
-        "version": "0.8.0",
+        "version": "0.8.20",
         "settings": {
+          "evmVersion": "paris",
           "optimizer": {
             "enabled": false,
             "runs": 200
@@ -32,19 +33,20 @@
         "hardhat/console.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "Voting"
       ]
     },
-    "C:\\Users\\shamm\\node_modules\\hardhat\\console.sol": {
-      "lastModificationDate": 1742895166937,
+    "D:\\Minors in Fintech\\Sem4\\Advanced Blockchain\\voting-project\\voting-project\\node_modules\\hardhat\\console.sol": {
+      "lastModificationDate": 1742919122369,
       "contentHash": "681c532e816169606d13a5fe8b475074",
       "sourceName": "hardhat/console.sol",
       "solcConfig": {
-        "version": "0.8.0",
+        "version": "0.8.20",
         "settings": {
+          "evmVersion": "paris",
           "optimizer": {
             "enabled": false,
             "runs": 200

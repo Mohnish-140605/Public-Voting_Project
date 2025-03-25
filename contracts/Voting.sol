@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
-import "hardhat/console.sol"; 
+import "hardhat/console.sol";
 
 contract Voting {
     struct Candidate {
@@ -17,22 +17,34 @@ contract Voting {
     uint public candidatesCount;
 
     event Voted(address indexed voter, uint indexed candidateId);
+    event VoterAdded(address indexed voter);
 
     constructor() {
-        addCandidate("Alice");
-        addCandidate("Bob");
-        addCandidate("Charlie");
+        _addCandidates();
     }
 
-    function addCandidate(string memory _name) private {
-        candidatesCount++;
-        candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
+    function _addCandidates() private {
+        string[33] memory candidateNames = [
+            "Narendra Modi", "Rahul Gandhi", "Amit Shah", "Yogi Adityanath", "Arvind Kejriwal",
+            "Mamata Banerjee", "Sharad Pawar", "Uddhav Thackeray", "Nitish Kumar", "Tejashwi Yadav",
+            "Akhilesh Yadav", "Mayawati", "Chandrababu Naidu", "Jagan Mohan Reddy", "K. Chandrashekar Rao",
+            "Sonia Gandhi", "Pinarayi Vijayan", "MK Stalin", "Devendra Fadnavis", "Hemant Soren",
+            "Biplab Kumar Deb", "Bhupesh Baghel", "Manohar Lal Khattar", "Basavaraj Bommai", "Ashok Gehlot",
+            "Sachin Pilot", "Naveen Patnaik", "Vasundhara Raje", "Sukhbir Singh Badal", "Harsimrat Kaur Badal",
+            "Jitin Prasada", "Jyotiraditya Scindia", "Rajnath Singh"
+        ];
+
+        for (uint i = 0; i < candidateNames.length; i++) {
+            candidatesCount++;
+            candidates[candidatesCount] = Candidate(candidatesCount, candidateNames[i], 0);
+        }
     }
 
     function addVoter(address _voter) public {
         require(!registeredVoters[_voter], "Voter already added.");
         registeredVoters[_voter] = true;
         voterList.push(_voter);
+        emit VoterAdded(_voter);
     }
 
     function vote(uint _candidateId) public {
@@ -43,10 +55,11 @@ contract Voting {
         hasVoted[msg.sender] = true;
         candidates[_candidateId].voteCount++;
 
-        // Debugging line
-        console.log("Voter:", msg.sender, "voted for candidate ID:", _candidateId);
-
         emit Voted(msg.sender, _candidateId);
+    }
+
+    function getVoterCount() public view returns (uint) {
+        return voterList.length;
     }
 
     function announceWinner() public view returns (string memory winnerName, uint winnerVoteCount) {
@@ -58,7 +71,6 @@ contract Voting {
                 winnerId = i;
             }
         }
-        winnerName = candidates[winnerId].name;
-        winnerVoteCount = candidates[winnerId].voteCount;
+        return (candidates[winnerId].name, candidates[winnerId].voteCount);
     }
 }
