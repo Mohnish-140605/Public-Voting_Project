@@ -39,4 +39,17 @@ contract Voting {
 
         emit Voted(msg.sender, _candidateId);
     }
+
+    function announceWinner() public view returns (string memory winnerName, uint winnerVoteCount) {
+        uint maxVotes = 0;
+        uint winnerId = 0;
+        for (uint i = 1; i <= candidatesCount; i++) {
+            if (candidates[i].voteCount > maxVotes) {
+                maxVotes = candidates[i].voteCount;
+                winnerId = i;
+            }
+        }
+        winnerName = candidates[winnerId].name;
+        winnerVoteCount = candidates[winnerId].voteCount;
+    }
 }

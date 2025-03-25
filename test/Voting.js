@@ -32,4 +32,11 @@ describe("Voting", function () {
         await voting.connect(addr1).vote(1);
         await expect(voting.connect(addr1).vote(1)).to.be.revertedWith("You have already voted.");
     });
+
+    it("Should announce the winner correctly", async function () {
+        await voting.connect(addr1).vote(1);
+        const [winnerName, winnerVoteCount] = await voting.announceWinner();
+        expect(winnerName).to.equal("Alice");
+        expect(winnerVoteCount).to.equal(1);
+    });
 });
