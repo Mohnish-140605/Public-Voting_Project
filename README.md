@@ -1,7 +1,4 @@
 
-
----
-
 # 🗳️ Public Voting System (Solidity-based)
 
 Welcome to the **Public Voting System**!  
@@ -96,8 +93,8 @@ Follow these steps to set up and run the **Public Voting System** on your local 
 
 This project was made possible by the following contributors:
 
-- **Shamitha Reddy N**  
-- **Mohnish G Naidu**
+- **[Mohnish G Naidu](https://github.com/Mohnish-140605)**  
+- **[Shamitha Reddy N](https://github.com/Shamithabsc)**
 
 ---
 
